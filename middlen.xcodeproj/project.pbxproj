@@ -14,6 +14,11 @@
 		764CB7392AB7DBF9004206D4 /* middlenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764CB7382AB7DBF9004206D4 /* middlenTests.swift */; };
 		764CB7432AB7DBF9004206D4 /* middlenUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764CB7422AB7DBF9004206D4 /* middlenUITests.swift */; };
 		764CB7452AB7DBF9004206D4 /* middlenUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764CB7442AB7DBF9004206D4 /* middlenUITestsLaunchTests.swift */; };
+		764CB7542ABC56D4004206D4 /* MiddlenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764CB7532ABC56D4004206D4 /* MiddlenManager.swift */; };
+		764CB7562ABC6039004206D4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764CB7552ABC6039004206D4 /* AppDelegate.swift */; };
+		764CB7582ABC6290004206D4 /* PrivacyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764CB7572ABC6290004206D4 /* PrivacyHelper.swift */; };
+		764CB75A2ABC6657004206D4 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764CB7592ABC6657004206D4 /* AboutView.swift */; };
+		764CB75C2ABC66D1004206D4 /* BundleInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764CB75B2ABC66D1004206D4 /* BundleInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +50,12 @@
 		764CB73E2AB7DBF9004206D4 /* middlenUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = middlenUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		764CB7422AB7DBF9004206D4 /* middlenUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = middlenUITests.swift; sourceTree = "<group>"; };
 		764CB7442AB7DBF9004206D4 /* middlenUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = middlenUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		764CB7512AB7E3A5004206D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		764CB7532ABC56D4004206D4 /* MiddlenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiddlenManager.swift; sourceTree = "<group>"; };
+		764CB7552ABC6039004206D4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		764CB7572ABC6290004206D4 /* PrivacyHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyHelper.swift; sourceTree = "<group>"; };
+		764CB7592ABC6657004206D4 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		764CB75B2ABC66D1004206D4 /* BundleInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,11 +106,17 @@
 		764CB7252AB7DBF7004206D4 /* middlen */ = {
 			isa = PBXGroup;
 			children = (
+				764CB7512AB7E3A5004206D4 /* Info.plist */,
 				764CB7262AB7DBF7004206D4 /* middlenApp.swift */,
 				764CB7282AB7DBF7004206D4 /* ContentView.swift */,
 				764CB72A2AB7DBF9004206D4 /* Assets.xcassets */,
 				764CB72F2AB7DBF9004206D4 /* middlen.entitlements */,
 				764CB72C2AB7DBF9004206D4 /* Preview Content */,
+				764CB7532ABC56D4004206D4 /* MiddlenManager.swift */,
+				764CB7552ABC6039004206D4 /* AppDelegate.swift */,
+				764CB7572ABC6290004206D4 /* PrivacyHelper.swift */,
+				764CB7592ABC6657004206D4 /* AboutView.swift */,
+				764CB75B2ABC66D1004206D4 /* BundleInfo.swift */,
 			);
 			path = middlen;
 			sourceTree = "<group>";
@@ -259,7 +276,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				764CB7582ABC6290004206D4 /* PrivacyHelper.swift in Sources */,
+				764CB75A2ABC6657004206D4 /* AboutView.swift in Sources */,
+				764CB75C2ABC66D1004206D4 /* BundleInfo.swift in Sources */,
+				764CB7542ABC56D4004206D4 /* MiddlenManager.swift in Sources */,
 				764CB7292AB7DBF7004206D4 /* ContentView.swift in Sources */,
+				764CB7562ABC6039004206D4 /* AppDelegate.swift in Sources */,
 				764CB7272AB7DBF7004206D4 /* middlenApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -422,6 +444,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"middlen/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = middlen/Info.plist;
+				INFOPLIST_KEY_NSAppleEventsUsageDescription = "We need to listen to global mouse events.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -440,13 +464,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = middlen/middlen.entitlements;
+				CODE_SIGN_ENTITLEMENTS = middlen/middlenRelease.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"middlen/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = middlen/Info.plist;
+				INFOPLIST_KEY_NSAppleEventsUsageDescription = "We need to listen to global mouse events.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -9,6 +9,12 @@ import SwiftUI
 
 @main
 struct middlenApp: App {
+    let delegate = AppDelegate()
+    
+    init(){
+        delegate.start()
+    }
+    
     var body: some Scene {
         WindowGroup {
             ContentView()

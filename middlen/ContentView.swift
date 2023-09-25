@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var isTapped = false
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            Text("Trackpad Hook App")
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .padding()
     }
