@@ -41,7 +41,9 @@ class AppDelegate: NSObject {
         }
     }
     
-    private func createStatusBarItem() {        statusBarItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
+    private func createStatusBarItem() {
+        statusBarItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
+        statusBarItem.button?.title = BundleInfo.displayName()
         statusBarItem.button?.toolTip = BundleInfo.displayName()
         
         statusBarItem.menu = NSMenu()

@@ -63,7 +63,11 @@ class MiddlenManager: NSObject {
     
     private static func eventHandler(proxy: CGEventTapProxy, eventType: CGEventType, cgEvent: CGEvent, userInfo: UnsafeMutableRawPointer?) -> Unmanaged<CGEvent>? {
         if eventType.rawValue == NSEvent.EventType.gesture.rawValue, let nsEvent = NSEvent(cgEvent: cgEvent) {
-            touchEventHandler(nsEvent)
+            if touchEventHandler(nsEvent) != nil {
+                return Unmanaged.passUnretained(cgEvent)
+            } else {
+                return nil
+            }
         } else if (eventType == .tapDisabledByUserInput || eventType == .tapDisabledByTimeout) {
             debugPrint("MiddlenManager tap disabled", eventType.rawValue)
             if eventTap == nil {
@@ -76,46 +80,59 @@ class MiddlenManager: NSObject {
         return Unmanaged.passUnretained(cgEvent)
     }
     
-    private static func touchEventHandler(_ nsEvent: NSEvent) {
+    private static func touchEventHandler(_ nsEvent: NSEvent) -> NSEvent? {
+        
         let touches = nsEvent.allTouches()
         
-        guard touches.count == 3 else { return }
-        if !touches.allSatisfy({$0.phase != .moved}) { return }
+        guard touches.count == 3 else { return nsEvent }
+        if !touches.allSatisfy({$0.phase != .moved}) { return nsEvent }
         
         var stationaryTouches = [NSTouch]()
-        var endedTouch: NSTouch?
+        var beganTouches = [NSTouch?]()
+        var endedTouches = [NSTouch?]()
         
         for touch in touches {
             switch touch.phase {
             case .stationary:
                 stationaryTouches.append(touch)
+            case .began:
+                beganTouches.append(touch)
             case .ended:
-                endedTouch = touch
+                endedTouches.append(touch)
             default:
                 break
             }
         }
         
+        let screenHeight = NSScreen.main?.frame.height ?? 0
+        let location = NSEvent.mouseLocation
+        let correctedY = screenHeight - location.y
+        let cgPoint = CGPoint(x: location.x, y: correctedY)
+        
         if stationaryTouches.count == 2 {
-            let leftStationaryTouch = stationaryTouches[0].normalizedPosition.x < stationaryTouches[1].normalizedPosition.x ? stationaryTouches[0] : stationaryTouches[1]
-            let rightStationaryTouch = stationaryTouches[0].normalizedPosition.x > stationaryTouches[1].normalizedPosition.x ? stationaryTouches[0] : stationaryTouches[1]
-            
-            let screenHeight = NSScreen.main?.frame.height ?? 0
-            let location = NSEvent.mouseLocation
-            let correctedY = screenHeight - location.y
-            let cgPoint = CGPoint(x: location.x, y: correctedY)
-            
-            if let endedTouch = endedTouch, endedTouch.normalizedPosition.x > leftStationaryTouch.normalizedPosition.x && endedTouch.normalizedPosition.x < rightStationaryTouch.normalizedPosition.x {
-                //미들클릭 업으로 변환
+            if beganTouches.count != 0 {
+                
+            } else if endedTouches.count != 0 {
+                //미들클릭 다운으로 변환
                 let middleClickDown = CGEvent(mouseEventSource: nil, mouseType: .otherMouseDown, mouseCursorPosition: cgPoint, mouseButton: .center)
                 middleClickDown?.post(tap: .cghidEventTap)
-                
+                //미들클릭 업으로 변환
                 let middleClickUp = CGEvent(mouseEventSource: nil, mouseType: .otherMouseUp, mouseCursorPosition: cgPoint, mouseButton: .center)
                 middleClickUp?.post(tap: .cghidEventTap)
-                print("mcdu:")
-                return // 원래의 좌클릭 업 이벤트를 중단
-                
+                return nil
+            }
+        } else  {
+            if beganTouches.count == 2 {//미들클릭 다운으로 변환
+                let middleClickDown = CGEvent(mouseEventSource: nil, mouseType: .otherMouseDown, mouseCursorPosition: cgPoint, mouseButton: .center)
+                middleClickDown?.post(tap: .cghidEventTap)
+                return nil
+            } else if endedTouches.count == 2 {
+                let middleClickDown = CGEvent(mouseEventSource: nil, mouseType: .otherMouseDown, mouseCursorPosition: cgPoint, mouseButton: .center)
+                middleClickDown?.post(tap: .cghidEventTap)
+                return nil
             }
         }
+        
+        return nsEvent
     }
 }
